@@ -28,7 +28,6 @@ import java.util.List;
 
 /**
  * Packages a Python module using distribute
- *
  * @goal package
  * @phase package
  */
