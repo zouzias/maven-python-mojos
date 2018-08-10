@@ -7,7 +7,7 @@ into the Java build lifecycle.
 
 The following plugins are offered:
 	
-* maven-python-plugin: https://github.com/Sqooba/maven-python-mojos/tree/master/maven-python-mojos/maven-python-plugin/
+* maven-python-plugin: https://github.com/Sqooba/maven-python-mojos/tree/master/maven-python-plugin
 
 	Allows to package and distribute Python modules during Maven builds
 

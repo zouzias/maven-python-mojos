@@ -77,3 +77,8 @@ python package.
 `install` phase:
 
 * Pip executable (to install the package): `<pipExecutable>pip</pipExecutable>`
+
+## TODOS
+
+* Add test phase (with pytest as a first step)
+* Add deploy phase?
