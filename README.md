@@ -3,9 +3,6 @@
 A collection of Maven plugins that allows to integrate useful tools written in Python
 into the Java build lifecycle.
 
-This allows Java shops to use the vast collection of Python libraries for things such as BDD integration testing
-or site & documentation generation.
-
 ## Plugins
 
 The following plugins are offered:

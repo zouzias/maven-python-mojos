@@ -10,6 +10,20 @@ This maven plugin allows to build python egg distribution and install the packag
 * Java 1.8
 * setup.py in your python source directory
 
+## Get plugin from sqooba's Artifactory
+
+Add the repo to your `pom.xml` or `settings.xml`. For example in your pom.xml:
+
+    <distributionManagement>
+        <repository>
+          <id>libs-release</id>
+          <name>libs-release</name>
+          <url>https://artifactory-v2.sqooba.io/artifactory/libs-release</url>
+        </repository>
+    </distributionManagement>
+
+Make sure that have the rights to read from this maven repo
+
 ## Build and install manually
 
     mvn clean install
@@ -31,7 +45,7 @@ This maven plugin allows to build python egg distribution and install the packag
         </executions>
     </plugin>
 
-## Run with maven
+## Build your python code with maven
 
     mvn package
 
@@ -56,10 +70,10 @@ python package.
 
 `package` phase:
 
-* Python interpreter (to build the dist): <pythonExecutable>python</pythonExecutable>
-* Python source directory: <sourceDirectory>${project.basedir}/src/main/python</sourceDirectory>
-* Python package version: <packageVersion>${project.version}</packageVersion>
+* Python interpreter (to build the dist): `<pythonExecutable>python</pythonExecutable>`
+* Python source directory: `<sourceDirectory>${project.basedir}/src/main/python</sourceDirectory>`
+* Python package version: `<packageVersion>${project.version}</packageVersion>`
 
 `install` phase:
 
-* Pip executable (to install the package): <pipExecutable>pip</pipExecutable>
+* Pip executable (to install the package): `<pipExecutable>pip</pipExecutable>`
