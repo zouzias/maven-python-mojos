@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>io.sqooba</groupId>
 		<artifactId>maven-python-mojos</artifactId>
-		<version>1.3</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>maven-python-mojos</groupId>
-	<artifactId>maven-python-distribute-plugin</artifactId>
-	<version>0.1.1</version>
+	<groupId>io.sqooba</groupId>
+	<artifactId>maven-python-plugin</artifactId>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
-	<name>Maven Python Distribute Plugin</name>
+	<name>Maven Python Plugin</name>
 
 	<dependencies />
 
