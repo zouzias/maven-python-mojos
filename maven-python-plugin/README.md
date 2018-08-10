@@ -32,7 +32,7 @@ Make sure that have the rights to read from this maven repo
 ## Use in your pom.xml
 
     <plugin>
-        <groupId>io.sqooba.maven</groupId>
+        <groupId>io.sqooba</groupId>
         <artifactId>maven-python-plugin</artifactId>
         <version>1.0</version>
         <executions>
