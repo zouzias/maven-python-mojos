@@ -77,7 +77,7 @@ If a version number is specified in the setup.py it will override both options a
 
 `test` phase:
 * Python interpreter (to run pytest): `<pythonExecutable>"python"</pythonExecutable>`
-* Test directory: `<testDirectory>"${project.basedir}/src/main/python/tests"</testDirectory>
+* Test directory: `<testDirectory>"${project.basedir}/src/main/python/tests"</testDirectory>`
 * Extra pytest parameters (logging, code coverage, etc...: `<extraParams>"-v -s"</extraParams>`
 
 `package` phase:
