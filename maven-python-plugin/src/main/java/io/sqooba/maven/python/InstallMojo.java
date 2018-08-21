@@ -33,6 +33,8 @@ import java.nio.file.Paths;
  */
 public class InstallMojo extends AbstractMojo {
 
+  private static final String INSTALL_COMMAND = "install";
+
   /**
    * @parameter default-value="${project}"
    * @required
@@ -51,7 +53,13 @@ public class InstallMojo extends AbstractMojo {
    */
   public void execute() throws MojoExecutionException, MojoFailureException {
 
-    final File buildDirectory = Paths.get(project.getBuild().getDirectory(), "py").toFile();
+    //Verify input of ProcessBuilder to prevent command injection
+    if (!Utils.verifyPip(pipExecutable)) {
+      throw new MojoExecutionException(String.format("%s is not a valid pip executable",
+          pipExecutable));
+    }
+
+    final File buildDirectory = Utils.getBuildDirectory(project).toFile();
     //Try to find setup.py
     final Path setupPath = Paths.get(buildDirectory.getPath(), "setup.py").getParent();
     try {
@@ -62,9 +70,9 @@ public class InstallMojo extends AbstractMojo {
 
       // Execute setup script
       ProcessBuilder processBuilder = new ProcessBuilder(pipExecutable,
-          "install",
+          INSTALL_COMMAND,
           setupPath.toFile().getAbsolutePath()
-          );
+      );
       processBuilder.directory(buildDirectory);
       processBuilder.redirectErrorStream(true);
       Process pr = processBuilder.start();

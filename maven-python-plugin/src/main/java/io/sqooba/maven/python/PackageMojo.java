@@ -28,6 +28,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Packages a Python module using distribute
@@ -38,6 +40,8 @@ import java.nio.file.Paths;
 public class PackageMojo extends AbstractMojo {
 
   private static final String VERSION = "${VERSION}";
+  private static final String PACKAGE_COMMAND = "bdist_egg";
+  private static final Pattern pattern = Pattern.compile(".*version\\s*=.*", Pattern.DOTALL);
 
   /**
    * @parameter default-value="${project.version}"
@@ -69,9 +73,15 @@ public class PackageMojo extends AbstractMojo {
    */
   public void execute() throws MojoExecutionException, MojoFailureException {
 
+    //Verify input of ProcessBuilder to prevent command injection
+    if (!Utils.verifyPython(pythonExecutable)) {
+      throw new MojoExecutionException(String.format("%s is not a valid python executable",
+          pythonExecutable));
+    }
+
     //Copy sourceDirectory
     final File sourceDirectoryFile = new File(sourceDirectory);
-    final File buildDirectory = Paths.get(project.getBuild().getDirectory(), "py").toFile();
+    final File buildDirectory = Utils.getBuildDirectory(project).toFile();
     try {
       FileUtils.copyDirectory(sourceDirectoryFile, buildDirectory);
     } catch (IOException e) {
@@ -89,18 +99,21 @@ public class PackageMojo extends AbstractMojo {
       Charset charset = StandardCharsets.UTF_8;
       String content = new String(Files.readAllBytes(setupPath), charset);
       packageVersion = packageVersion.replaceAll("-?SNAPSHOT", "");
-      if (content.matches("version\\s*=\\s*")) {
-        content = content.replace(VERSION, packageVersion);
-      } else {
+      Matcher matcher = pattern.matcher(content);
+      if (!matcher.matches()) {
         content = content.replace("setup(", "setup(version='${VERSION}',");
       }
+
       content = content.replace(VERSION, packageVersion);
+
+      getLog().info(String.format("Target setup.py:%n%s", content));
+
       Files.write(setupPath, content.getBytes(charset));
 
       //Execute setup script
       ProcessBuilder processBuilder = new ProcessBuilder(pythonExecutable,
           setupPath.toFile().getAbsolutePath(),
-          "bdist_egg");
+          PACKAGE_COMMAND);
       processBuilder.directory(buildDirectory);
       processBuilder.redirectErrorStream(true);
       Process pr = processBuilder.start();
@@ -113,9 +126,10 @@ public class PackageMojo extends AbstractMojo {
 
       if (exitCode != 0) {
         throw new MojoExecutionException(
-            String.format("'%s install %s' returned error code %s",
+            String.format("'%s %s %s' returned error code %s",
                 pythonExecutable,
                 setupPath.toFile().getAbsolutePath(),
+                PACKAGE_COMMAND,
                 exitCode));
       }
 
