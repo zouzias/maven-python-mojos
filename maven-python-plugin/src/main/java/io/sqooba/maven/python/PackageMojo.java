@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 public class PackageMojo extends AbstractMojo {
 
   private static final String VERSION = "${VERSION}";
-  private static final String PACKAGE_COMMAND = "bdist_egg";
   private static final Pattern pattern = Pattern.compile(".*version\\s*=.*", Pattern.DOTALL);
 
   /**
@@ -48,6 +47,12 @@ public class PackageMojo extends AbstractMojo {
    * @required
    */
   private String packageVersion;
+
+  /**
+   * @parameter default-value="sdist"
+   * @required
+   */
+  private String pythonbuild;
 
   /**
    * @parameter default-value="${project}"
@@ -73,7 +78,7 @@ public class PackageMojo extends AbstractMojo {
    */
   public void execute() throws MojoExecutionException, MojoFailureException {
 
-    //Verify input of ProcessBuilder to prevent command injection
+    //Verify input of ProcessBuilder to prevent pythonbuild injection
     if (!Utils.verifyPython(pythonExecutable)) {
       throw new MojoExecutionException(String.format("%s is not a valid python executable",
           pythonExecutable));
@@ -104,6 +109,8 @@ public class PackageMojo extends AbstractMojo {
         content = content.replace("setup(", "setup(version='${VERSION}',");
       }
 
+      PackageEnum packageCommandEnum = PackageEnum.valueOf(pythonbuild);
+
       content = content.replace(VERSION, packageVersion);
 
       getLog().info(String.format("Target setup.py:%n%s", content));
@@ -113,7 +120,7 @@ public class PackageMojo extends AbstractMojo {
       //Execute setup script
       ProcessBuilder processBuilder = new ProcessBuilder(pythonExecutable,
           setupPath.toFile().getAbsolutePath(),
-          PACKAGE_COMMAND);
+              packageCommandEnum.toString());
       processBuilder.directory(buildDirectory);
       processBuilder.redirectErrorStream(true);
       Process pr = processBuilder.start();
@@ -129,7 +136,7 @@ public class PackageMojo extends AbstractMojo {
             String.format("'%s %s %s' returned error code %s",
                 pythonExecutable,
                 setupPath.toFile().getAbsolutePath(),
-                PACKAGE_COMMAND,
+                    packageCommandEnum.toString(),
                 exitCode));
       }
 
