@@ -10,5 +10,3 @@ The following plugins are offered:
 * maven-python-plugin: https://github.com/Sqooba/maven-python-mojos/tree/master/maven-python-plugin
 
 	Allows to package and distribute Python modules during Maven builds
-
-
