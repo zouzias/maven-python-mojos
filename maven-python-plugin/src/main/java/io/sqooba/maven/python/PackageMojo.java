@@ -52,7 +52,7 @@ public class PackageMojo extends AbstractMojo {
    * @parameter default-value="sdist"
    * @required
    */
-  private String pythonbuild;
+  private String pythonBuild;
 
   /**
    * @parameter default-value="${project}"
@@ -78,7 +78,7 @@ public class PackageMojo extends AbstractMojo {
    */
   public void execute() throws MojoExecutionException, MojoFailureException {
 
-    //Verify input of ProcessBuilder to prevent pythonbuild injection
+    //Verify input of ProcessBuilder to prevent pythonBuild injection
     if (!Utils.verifyPython(pythonExecutable)) {
       throw new MojoExecutionException(String.format("%s is not a valid python executable",
           pythonExecutable));
@@ -109,7 +109,7 @@ public class PackageMojo extends AbstractMojo {
         content = content.replace("setup(", "setup(version='${VERSION}',");
       }
 
-      PackageEnum packageCommandEnum = PackageEnum.valueOf(pythonbuild);
+      PackageEnum packageCommandEnum = PackageEnum.valueOf(pythonBuild);
 
       content = content.replace(VERSION, packageVersion);
 
