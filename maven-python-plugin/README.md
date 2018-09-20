@@ -85,7 +85,7 @@ If a version number is specified in the setup.py it will override both options a
 * Python interpreter (to build the dist): `<pythonExecutable>"python"</pythonExecutable>`
 * Python source directory: `<sourceDirectory>"${project.basedir}/src/main/python"</sourceDirectory>`
 * Python package version: `<packageVersion>"${project.version}"</packageVersion>`
-* Python package build: `<pythonBuild>sdist</pythonBuild>`
+* Python package build (possible values: `sdist`, `bdist_egg`, `bdist_wheel`): `<pythonBuild>sdist</pythonBuild>`
 
 `install` phase:
 
