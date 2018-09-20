@@ -13,7 +13,7 @@ public class Utils {
 
   private static final String PYTHON_NAME = "python";
   private static final String PIP_NAME = "pip";
-  private static final String PYTHON_DIST_DIRECTORY = "py";
+  private static final String PYTHON_DIST_DIRECTORY = "python";
   public static final String SEPARATOR = ";";
 
   public static Boolean verifyContains(String command, String expectedExecName) {
