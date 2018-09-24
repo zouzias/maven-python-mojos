@@ -76,17 +76,17 @@ If a version number is specified in the setup.py it will override both options a
 ## Configuration and defaults
 
 `test` phase:
-* Python interpreter (to run pytest): `<pythonExecutable>"python"</pythonExecutable>`
-* Test directory: `<testDirectory>"${project.basedir}/src/main/python/tests"</testDirectory>`
+* Python interpreter (to run pytest): `<pythonExecutable>python</pythonExecutable>`
+* Test directory: `<testDirectory>${project.basedir}/src/main/python/tests</testDirectory>`
 * Extra pytest parameters (logging, code coverage, etc...: `<extraParams>"-v -s"</extraParams>`
 
 `package` phase:
 
-* Python interpreter (to build the dist): `<pythonExecutable>"python"</pythonExecutable>`
-* Python source directory: `<sourceDirectory>"${project.basedir}/src/main/python"</sourceDirectory>`
-* Python package version: `<packageVersion>"${project.version}"</packageVersion>`
+* Python interpreter (to build the dist): `<pythonExecutable>python</pythonExecutable>`
+* Python source directory: `<sourceDirectory>${project.basedir}/src/main/python</sourceDirectory>`
+* Python package version: `<packageVersion>${project.version}</packageVersion>`
 * Python package build (possible values: `sdist`, `bdist_egg`, `bdist_wheel`): `<pythonBuild>sdist</pythonBuild>`
 
 `install` phase:
 
-* Pip executable (to install the package): `<pipExecutable>"pip"</pipExecutable>`
+* Pip executable (to install the package): `<pipExecutable>pip</pipExecutable>`
