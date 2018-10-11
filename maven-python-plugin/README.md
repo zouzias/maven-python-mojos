@@ -78,7 +78,7 @@ If a version number is specified in the setup.py it will override both options a
 `test` phase:
 * Python interpreter (to run pytest): `<pythonExecutable>python</pythonExecutable>`
 * Test directory: `<testDirectory>${project.basedir}/src/main/python/tests</testDirectory>`
-* Extra pytest parameters (logging, code coverage, etc...: `<extraParams>"-v -s"</extraParams>`
+* Extra pytest parameters (logging, code coverage, etc...): `<extraParams>"-v -s"</extraParams>`
 
 `package` phase:
 
@@ -86,6 +86,13 @@ If a version number is specified in the setup.py it will override both options a
 * Python source directory: `<sourceDirectory>${project.basedir}/src/main/python</sourceDirectory>`
 * Python package version: `<packageVersion>${project.version}</packageVersion>`
 * Python package build (possible values: `sdist`, `bdist_egg`, `bdist_wheel`): `<pythonBuild>sdist</pythonBuild>`
+
+`compile` phase:
+
+* Python interpreter: `<pythonExecutable>python</pythonExecutable>`
+* Python source directory: `<sourceDirectory>${project.basedir}/src/main/python</sourceDirectory>`
+* Extra mypy parameters: `<extraParams>--ignore-missing-imports</extraParams>`
+
 
 `install` phase:
 
