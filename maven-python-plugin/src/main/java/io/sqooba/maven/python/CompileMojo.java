@@ -20,7 +20,6 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
-import org.omg.CORBA.COMM_FAILURE;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,12 +30,14 @@ import java.util.List;
 
 
 /**
- * Installs a Python module using distribute
+ * Run mypy (optional static typing) on source directory
  *
- * @goal compile
+ * See http://mypy-lang.org/
+ *
+ * @goal mypy
  * @phase compile
  */
-public class MypyMojo extends AbstractMojo {
+public class CompileMojo extends AbstractMojo {
 
   private static final String COMPILE_COMMAND = "mypy";
   private static final String PYTHON_FLAG = "-m";
@@ -121,26 +122,16 @@ public class MypyMojo extends AbstractMojo {
         getLog().info(line);
       }
 
-      // See https://docs.pytest.org/en/latest/usage.html#possible-exit-codes
+      // See https://github.com/python/mypy/issues/2754
       switch (exitCode) {
         case 1:
-          throw new MojoFailureException("Some test(s) failed");
+          throw new MojoFailureException("Static code validation failed");
 
         case 2:
-          throw new MojoExecutionException("Tests execution was interrupted");
-
-        case 3:
-          throw new MojoFailureException("Pytest internal error");
-
-        case 4:
-          throw new MojoFailureException("Pytest command line usage error");
-
-        case 5:
-          getLog().info("No tests were collected");
-          break;
+          throw new MojoExecutionException("Command line syntax errors, missing files, or blocking errors");
 
         default:
-          getLog().info("All tests passed successfully");
+          getLog().info("All mypy checks passed successfully");
       }
     } catch (IOException | InterruptedException e) {
       throw new MojoExecutionException(String.format("Unable to execute %s",
