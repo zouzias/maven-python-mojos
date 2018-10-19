@@ -11,7 +11,7 @@ build a python egg distribution and install the package locally.
 * pip
 * setup.py in your python source directory
 * __optional__: [pytest](https://docs.pytest.org/en/latest/usage.html), if you want to run your python test with maven.
-* __optional__: [mypy](http://mypy-lang.org/l), if you want to run optional static typing analysis.
+* __optional__: [mypy](http://mypy-lang.org/), if you want to run optional static typing analysis.
 
 ## Get plugin from sqooba's Artifactory
 
